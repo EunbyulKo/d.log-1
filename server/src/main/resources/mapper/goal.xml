@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dlog.diary.user.mapper.GoalMapper">
+	
+	<resultMap id="goal" type="com.dlog.diary.user.entity.Goal">
+		<result property="goalId" column="goal_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="targetWeight" column="target_weight"/>
+		<result property="startDt" column="start_dt"/>
+		<result property="endDt" column="end_dt"/>
+	</resultMap>
+	
+	<select id="getAllGoalList" resultMap="goal">
+		SELECT * 
+		FROM GOAL
+	</select>
+	
+	<select id="getGoal" resultMap="goal">
+		SELECT * 
+		FROM GOAL
+		WHERE goal_id = #{goalId}
+	</select>
+	
+	<select id="getGoalByUserId" resultMap="goal">
+		SELECT * 
+		FROM GOAL
+		WHERE user_id = #{userId}
+	</select>
+	
+	
+	<insert id="setGoal" parameterType="com.dlog.diary.user.entity.Goal">
+		INSERT INTO 
+		GOAL (
+						goal_id
+						,user_id
+						,title
+						,target_weight
+						,start_dt
+						,end_dt
+						,state
+		) VALUES(
+						#{goalId}
+						,#{userId}
+						,#{title}
+						,#{targetWeight}
+						,#{startDt}
+						,#{endDt}
+						,#{state}
+		)
+		ON DUPLICATE KEY UPDATE goal_id = VALUES(goal_id);
+	</insert>
+	
+	<delete id="removeGoal">
+		DELETE
+		FROM GOAL
+		WHERE goal_id = #{goalId}
+	</delete>
+	
+	<delete id="removeGoalByUserId">
+		DELETE
+		FROM GOAL
+		WHERE user_id = #{userId}
+	</delete>
+	
+</mapper>
